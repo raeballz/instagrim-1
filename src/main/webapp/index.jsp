@@ -18,7 +18,7 @@
     <div id="wrapper">
 
         <header>
-            <h1>InstaGrim !
+            <h1>InstaGrim!
                 <div id="searchBox">
                    
                 <form method="POST" action="UserDataAccess">
