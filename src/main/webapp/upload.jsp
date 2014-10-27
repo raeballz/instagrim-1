@@ -13,12 +13,23 @@
         <link rel="stylesheet" type="text/css" href="Styles.css" />
     </head>
     <body>
-        <h1>InstaGrim ! </h1>
+    <div id="wrapper">
+
+        <h1>InstaGrim! 
+                <div id="searchBox">
+                   
+                <form method="POST" action="UserDataAccess">
+                <input type ="text" name="SearchTerm">
+                <input type ="submit" name="submitSearch">
+                
+                </form></div>
+        </h1>
         <h2>Your world in Black and White</h2>
         <nav>
             <ul>
-                <li class="nav"><a href="upload.jsp">Upload</a></li>
-                <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li>
+                <ul class="nav"><a href="upload.jsp">Upload</a></ul>
+                <ul class="nav"><a href="/Instagrim/logout.jsp">Logout</ul>
+                <ul class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></ul>
             </ul>
         </nav>
  
@@ -37,5 +48,6 @@
                 <li class="footer"><a href="/Instagrim">Home</a></li>
             </ul>
         </footer>
+    </div>
     </body>
 </html>

@@ -27,7 +27,7 @@ public class User {
         
     }
     
-    public boolean RegisterUser(String username, String Password){
+    public boolean RegisterUser(String username, String Password, String email, String first_name, String last_name, String userBio){
         AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
         String EncodedPassword=null;
         try {
@@ -37,15 +37,68 @@ public class User {
             return false;
         }
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("insert into userprofiles (login,password) Values(?,?)");
+        PreparedStatement ps = session.prepare("insert into userprofiles (login,password,email,first_name,last_name,userBio) Values(?,?,?,?,?,?)");
        
         BoundStatement boundStatement = new BoundStatement(ps);
         session.execute( // this is where the query is executed
-                boundStatement.bind( // here you are binding the 'boundStatement'
-                        username,EncodedPassword));
+        boundStatement.bind(username,EncodedPassword,email,first_name,last_name,userBio));
         //We are assuming this always works.  Also a transaction would be good here !
         
         return true;
+    }
+    
+    public String getUserBio(String username)
+    {
+    String failtext = "User has not created a biography yet!"; 
+    String userBio = null;
+    Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("select * from userprofiles where login =?");
+        ResultSet rs = null;
+        BoundStatement boundStatement = new BoundStatement(ps);
+        rs = session.execute( // this is where the query is executed
+                boundStatement.bind( // here you are binding the 'boundStatement'
+                        username));
+        if (rs.isExhausted()) 
+        {
+            System.out.println("");
+            return failtext;
+        }
+            else
+            {
+                for (Row row : rs)
+            {
+                userBio = row.getString("userbio");
+            }
+                return userBio;
+        }
+        
+    }
+    
+    public String getUser(String username)
+    {
+    String failtext = "User has not created a biography yet!"; 
+    String userBio = null;
+    Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("select userBio from userprofiles where login =?");
+        ResultSet rs;
+        BoundStatement boundStatement = new BoundStatement(ps);
+        rs = session.execute( // this is where the query is executed
+                boundStatement.bind( // here you are binding the 'boundStatement'
+                        username));
+        if (rs.isExhausted()) 
+        {
+            System.out.println("");
+            return failtext;
+        }
+            else
+            {
+                for (Row row : rs)
+            {
+                userBio = row.getString("userBio");
+            }
+                return userBio;
+        }
+        
     }
     
     public boolean IsValidUser(String username, String Password){
@@ -75,7 +128,7 @@ public class User {
                     return true;
             }
         }
-   
+    
     
     return false;  
     }

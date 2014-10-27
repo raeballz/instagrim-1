@@ -14,14 +14,22 @@
 
     </head>
     <body>
+ <div id="wrapper">
+
         <header>
         <h1>InstaGrim ! </h1>
+                        <div id="searchBox">
+                   
+                <form method="POST" action="UserDataAccess">
+                <input type ="text" name="SearchTerm">
+                <input type ="submit" name="submitSearch">
+                
+                </form></div>
         <h2>Your world in Black and White</h2>
         </header>
         <nav>
             <ul>
-                
-                <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
+                <ul><a href="/Instagrim/Images/majed">Sample Images</a></ul>
             </ul>
         </nav>
        
@@ -42,5 +50,7 @@
                 <li class="footer"><a href="/Instagrim">Home</a></li>
             </ul>
         </footer>
+    </div>
+
     </body>
 </html>

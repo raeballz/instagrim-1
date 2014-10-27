@@ -6,7 +6,8 @@
 
 <%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
+<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
+<%@page import="uk.ac.dundee.computing.aec.instagrim.models.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,31 +16,51 @@
         <link rel="stylesheet" type="text/css" href="/Instagrim/Styles.css" />
     </head>
     <body>
+    <div id="wrapper">
         <header>
         
-        <h1>InstaGrim ! </h1>
+        <h1>InstaGrim ! 
+                <div id="searchBox">
+                   
+                <form method="POST" action="UserDataAccess">
+                <input type ="text" name="SearchTerm">
+                <input type ="submit" name="submitSearch">
+                
+                </form></div>
+        </h1>
         <h2>Your world in Black and White</h2>
         </header>
         
         <nav>
             <ul>
-                <li class="nav"><a href="/Instagrim/upload.jsp">Upload</a></li>
-                <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li>
+                <ul class="nav"><a href="/Instagrim/upload.jsp">Upload</a></ul>
+                <ul class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></ul>
+                <ul class="nav"><a href="/Instagrim/logout.jsp">Logout</a></ul>
             </ul>
         </nav>
  
         <article>
-            <h1>Your Pics</h1>
-        <%
+            <%
+                
+            LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+            String Username = (String) session.getAttribute("username");
+            
+            String userBio = (String)request.getAttribute("userBio");
+            %>
+            <h1><%= Username%></h1>
+            <h2>User Bio</h2>
+            <p><%= userBio%></p>
+            <%
             java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
             if (lsPics == null) {
         %>
         <p>No Pictures found</p>
         <%
-        } else {
-            Iterator<Pic> iterator;
-            iterator = lsPics.iterator();
-            while (iterator.hasNext()) {
+        } else 
+            {
+                Iterator<Pic> iterator;
+                iterator = lsPics.iterator();
+                while (iterator.hasNext()) {
                 Pic p = (Pic) iterator.next();
 
         %>
@@ -54,5 +75,6 @@
                 <li class="footer"><a href="/Instagrim">Home</a></li>
             </ul>
         </footer>
+    </div>
     </body>
 </html>
